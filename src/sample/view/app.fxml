@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348;" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.appController">
+    <children>
+        <AnchorPane layoutY="91.0" prefHeight="309.0" prefWidth="700.0" style="-fx-background-color: #fafafa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="91.0">
+            <children>
+                <Label alignment="CENTER" layoutX="310.0" layoutY="36.0" text="Autorization" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="278.0">
+                    <font>
+                        <Font name="Comic Sans MS" size="19.0" />
+                    </font>
+                </Label>
+            <ImageView fitHeight="244.0" fitWidth="394.0" layoutX="194.0" layoutY="63.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="194.0" AnchorPane.rightAnchor="180.66665649414062" AnchorPane.topAnchor="63.0">
+               <image>
+                  <Image url="@../assets/Desert.jpg" />
+               </image>
+            </ImageView>
+            </children></AnchorPane>
+        <Label alignment="CENTER" layoutX="281.0" layoutY="14.0" text="JavaFX" textFill="WHITE" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="268.0">
+            <font>
+                <Font name="Comic Sans MS Bold" size="42.0" />
+            </font>
+        </Label>
+    </children>
+</AnchorPane>
