@@ -4,7 +4,9 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -24,6 +26,12 @@
             <PasswordField fx:id="signUpCountry" layoutX="209.0" layoutY="191.0" prefHeight="25.0" prefWidth="235.0" promptText="Country" style="-fx-background-color: #fafafa; -fx-border-color: green; -fx-border-radius: 10;" />
             <CheckBox layoutX="242.0" layoutY="147.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="59.0" selected="true" text="Man" />
             <CheckBox fx:id="signUpCheckBoxFemale" layoutX="356.0" layoutY="147.0" mnemonicParsing="false" text="Woman" />
+            <RadioButton layoutX="122.0" layoutY="147.0" mnemonicParsing="false" text="Man">
+               <toggleGroup>
+                  <ToggleGroup fx:id="MyGroup" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton layoutX="435.0" layoutY="147.0" mnemonicParsing="false" text="Woman" toggleGroup="$MyGroup" />
             </children></AnchorPane>
         <Label alignment="CENTER" layoutX="281.0" layoutY="14.0" text="JavaFX" textFill="WHITE" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="268.0">
             <font>

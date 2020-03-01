@@ -29,7 +29,7 @@
             <Font name="Comic Sans MS Bold" size="42.0" />
          </font>
       </Label>
-      <Button fx:id="loginSignUpButton" layoutX="536.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" style="-fx-background-color: #F39C63;" text="Зарегистрироваться" textFill="WHITE" AnchorPane.rightAnchor="23.0">
+      <Button fx:id="loginSignUpButton" layoutX="536.0" layoutY="14.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="141.0" style="-fx-background-color: #F39C63;" text="to register" textFill="WHITE" AnchorPane.rightAnchor="23.0">
          <font>
             <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
