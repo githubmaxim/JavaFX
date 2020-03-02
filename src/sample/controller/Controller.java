@@ -33,6 +33,16 @@ public class Controller {
 
     @FXML
     void initialize() {
+        authSigInButton.setOnAction(event -> {
+            String loginText = login_field.getText().trim();
+            String loginPassword = password_field.getText().trim();
+
+            if(!loginText.equals("") && !loginPassword.equals(""))
+                loginUser(loginText, loginPassword);
+            else
+                System.out.println("Login and/or password is empty");
+                });
+
         loginSignUpButton.setOnAction(event -> {
             loginSignUpButton.getScene().getWindow().hide(); //при нажатии на эту кнопку будет прятаться все окно "sample.fxml"
 
@@ -52,6 +62,10 @@ public class Controller {
             stage.showAndWait();
 
         });
+    }
+
+    private void loginUser(String loginText, String loginPassword) {
+
     }
 }
 
