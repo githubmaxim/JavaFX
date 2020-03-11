@@ -1,6 +1,9 @@
 package sample.controller;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +13,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
+import sample.database.DatabaseHandler;
+import sample.user.User;
 
 public class Controller {
+    private static final Logger log = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
+
 
     @FXML
     private ResourceBundle resources;
@@ -34,6 +42,7 @@ public class Controller {
     @FXML
     void initialize() {
         authSigInButton.setOnAction(event -> {
+            //присваиваем переменным значения полей 'Login' и 'Password'
             String loginText = login_field.getText().trim();
             String loginPassword = password_field.getText().trim();
 
@@ -65,7 +74,27 @@ public class Controller {
     }
 
     private void loginUser(String loginText, String loginPassword) {
+        DatabaseHandler dbHandler = new DatabaseHandler();
+        User user = new User();
+        user.setUserName(loginText);
+        user.setPassword(loginPassword);
+        ResultSet result = dbHandler.getUser(user);
 
+        int counter = 0;
+
+        while (true){
+            try {
+                if (!result.next()) break;
+            } catch (SQLException e) {
+                log.error("SQLException in Controller", e);
+                e.printStackTrace();
+            }
+            counter++;
+        }
+
+        if (counter >= 1){
+            System.out.println("Success!");
+        }
     }
 }
 
