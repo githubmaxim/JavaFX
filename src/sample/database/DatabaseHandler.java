@@ -4,11 +4,7 @@ import org.apache.log4j.Logger;
 import sample.user.User;
 
 import java.lang.invoke.MethodHandles;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import java.sql.*;
 
 public class DatabaseHandler extends Config {
     private static final Logger log = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -53,5 +49,27 @@ public class DatabaseHandler extends Config {
             log.error("SQLException", e);
             e.printStackTrace();
         }
+    }
+
+    public ResultSet getUser(User user){
+        ResultSet resSet = null;
+
+        String select = "SELECT * FROM" + " " + Const.USER_TABLE + " " + "WHERE" + " " +
+                Const.USER_USERNAME + "=? AND " +  Const.USER_PASSWORD + "=?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, user.getUserName());
+            prSt.setString(2, user.getPassword());
+
+            resSet = prSt.executeQuery();
+        } catch (ClassNotFoundException e) {
+            log.error("ClassNotFoundException", e);
+            e.printStackTrace();
+        } catch (SQLException e) {
+            log.error("SQLException in DatabaseHandler", e);
+            e.printStackTrace();
+        }
+
+        return resSet;
     }
 }
