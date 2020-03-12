@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+import sample.animation.Shake;
 import sample.database.DatabaseHandler;
 import sample.user.User;
 
@@ -82,18 +83,23 @@ public class Controller {
 
         int counter = 0;
 
-        while (true){
-            try {
-                if (!result.next()) break;
-            } catch (SQLException e) {
+        try {
+             while (result.next()) {
+                 counter++;
+             }
+        } catch (SQLException e) {
                 log.error("SQLException in Controller", e);
                 e.printStackTrace();
-            }
-            counter++;
         }
 
         if (counter >= 1){
             System.out.println("Success!");
+        }
+        else {
+            Shake userLoginAnim = new Shake(login_field);
+            Shake userPassAnim = new Shake(password_field);
+            userLoginAnim.playAnim();
+            userPassAnim.playAnim();
         }
     }
 }
