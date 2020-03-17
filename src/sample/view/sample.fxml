@@ -9,7 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #2E3348;" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.Controller">
    <children>
-      <AnchorPane layoutY="91.0" prefHeight="309.0" prefWidth="700.0" style="-fx-background-color: #fafafa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+      <AnchorPane layoutY="90.0" prefHeight="309.0" prefWidth="700.0" style="-fx-background-color: #fafafa;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
          <children>
             <TextField fx:id="login_field" layoutX="242.0" layoutY="80.0" maxHeight="25.0" maxWidth="235.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="235.0" promptText="Login" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="223.0" />
             <PasswordField fx:id="password_field" layoutX="242.0" layoutY="115.0" prefHeight="25.0" prefWidth="235.0" promptText="Password" style="-fx-background-color: #fafafa; -fx-border-color: green; -fx-border-radius: 10;" />
@@ -18,11 +18,16 @@
                   <Font name="Comic Sans MS" size="19.0" />
                </font>
             </Label>
-            <Button fx:id="authSigInButton" cache="true" layoutX="294.0" layoutY="161.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="132.0" style="-fx-background-color: #F39C63;" text="Enter" textFill="WHITE">
+            <Button fx:id="authSigInButton" cache="true" layoutX="294.0" layoutY="177.0" minHeight="-Infinity" mnemonicParsing="false" prefHeight="60.0" prefWidth="132.0" style="-fx-background-color: #F39C63;" text="Enter" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="31.0" />
                </font>
             </Button>
+            <Label fx:id="error_field" layoutX="294.0" layoutY="146.0" prefHeight="19.0" prefWidth="132.0" text="Error login/password" textFill="#ff0600">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
          </children></AnchorPane>
       <Label alignment="CENTER" layoutX="281.0" layoutY="14.0" text="JavaFX" textFill="WHITE" AnchorPane.leftAnchor="281.0" AnchorPane.rightAnchor="268.0">
          <font>
