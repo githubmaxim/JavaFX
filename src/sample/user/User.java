@@ -9,6 +9,7 @@ public class User {
     private String location;
     private String gender;
 
+    //дальше идут два конструктора (заполненный/пустой)
     public User(String firstName, String lastName, String userName, String password, String location, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,6 +20,8 @@ public class User {
     }
 
     public User() {}
+
+
 
     public String getFirstName() {
         return firstName;
