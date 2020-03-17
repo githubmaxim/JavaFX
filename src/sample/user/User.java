@@ -1,5 +1,6 @@
 package sample.user;
 
+
 //класс-прокладка который(в случае необходимости) будет закрыт от изменения извне через SecurityManager.
 public class User {
     private String firstName;
