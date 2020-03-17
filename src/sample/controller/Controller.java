@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -41,7 +42,15 @@ public class Controller {
     private Button loginSignUpButton;
 
     @FXML
+    private Label error_field;
+
+
+    //обязательный к переопределению метод, в котором прописываются программы действия после нажатия на кнопки
+    @FXML
     void initialize() {
+        //изначально устанавливаем поле ошибки ввода логина/пароля невидимым
+        error_field.setVisible(false);
+
         authSigInButton.setOnAction(event -> {
             //присваиваем переменным значения полей 'Login' и 'Password'
             String loginText = login_field.getText().trim();
@@ -54,32 +63,19 @@ public class Controller {
                 });
 
         loginSignUpButton.setOnAction(event -> {
-            loginSignUpButton.getScene().getWindow().hide(); //при нажатии на эту кнопку будет прятаться все окно "sample.fxml"
-
-            //Дальше идет блок который запустит другое fxml окно вместо скрытого
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/view/signUp.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Parent root = loader.getRoot(); //корневой компонент в который будут вложены остальные элементы
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-
+            //переходим на страницу регистрации
+            openNewScene("/sample/view/signUp.fxml");
         });
     }
 
+    //метод проверяет на наличие в Б.Д. введенных Login/Password и потом или переходит на новую
+    // страницу (метод openNewScene()) или трясет поля ввода и делает видимым поле ошибки
     private void loginUser(String loginText, String loginPassword) {
         DatabaseHandler dbHandler = new DatabaseHandler();
         User user = new User();
         user.setUserName(loginText);
         user.setPassword(loginPassword);
-        ResultSet result = dbHandler.getUser(user);
+        ResultSet result = dbHandler.getUserLogPass(user);
 
         int counter = 0;
 
@@ -93,14 +89,50 @@ public class Controller {
         }
 
         if (counter >= 1){
-            System.out.println("Success!");
+            openNewScene("/sample/view/app.fxml");
         }
         else {
+            error_field.setVisible(true); //устанавливаем поле ошибки ввода логина/пароля видимым
+
             Shake userLoginAnim = new Shake(login_field);
             Shake userPassAnim = new Shake(password_field);
             userLoginAnim.playAnim();
             userPassAnim.playAnim();
         }
+    }
+
+    //метод будет скрывать текущее окно и открывать введенное новое или
+    // закрывать текущее окно и открывать введенное новое
+    public void openNewScene(String window) {
+
+
+        //строка которая при нажатии на эту кнопку будет прятаться окно "***.fxml",
+        //но как открыть и использовать это окно снова я пока не нашел
+        //loginSignUpButton.getScene().getWindow().hide();
+
+        //!!!Дальше реализован механизм закрытия текущего и открытия (новым classLoader-ом) нового fxml окна!!!
+
+        //блок кода который закрывает текущее fxml окно
+        Stage stage = (Stage) loginSignUpButton.getScene().getWindow();
+        stage.close();
+
+        //блок кода который запустит другое fxml окно вместо зарытого
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(window));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot(); //корневой компонент в который будут вложены остальные элементы
+        Stage stage1 = new Stage();
+        stage1.setScene(new Scene(root));
+        stage1.show();
+
+
+
     }
 }
 
