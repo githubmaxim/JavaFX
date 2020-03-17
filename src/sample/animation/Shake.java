@@ -9,10 +9,10 @@ public class Shake {
 
     public Shake(Node node) {
         //говорим, что объект будет трястись, время 70 млсек
-        tt = new TranslateTransition(Duration.millis(150), node);
+        tt = new TranslateTransition(Duration.millis(70), node);
         tt.setFromX(0f); //отступ по х ноль
-        tt.setByX(10f); //размер смещения при тряске по х
-        tt.setCycleCount(3); //сколько раз протрясется
+        tt.setByX(3f); //размер смещения при тряске по х
+        tt.setCycleCount(5); //сколько раз протрясется
         tt.setAutoReverse(true); //чтобы объект при тряске возвращался обратно
         //Так устанавливается только одно свойство (тряска по х), если хотим установить
         // тряску по у, то нужно прописывать еше один tt1. Иначе setAutoReverse(true) не
