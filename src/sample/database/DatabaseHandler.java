@@ -11,6 +11,7 @@ public class DatabaseHandler extends Config {
 
     Connection dbConnection;
 
+    //метод подключающий к Б.Д.
     public Connection getDbConnection() throws ClassNotFoundException, SQLException {
         //формируем URL
         String connectionString = "jdbc:mysql://" + dbHost + ":" + dbPort + "/" + dbName + "?" + dbTimezone;
@@ -24,11 +25,11 @@ public class DatabaseHandler extends Config {
         return dbConnection;
     }
 
-    //метод формирующий SQL запрос, который записывает данные пользователя в поля таблицы БД
+    //метод формирует SQL запрос, который записывает данные пользователя в поля таблицы БД
     public void signUpUser(User user) {
         String insert = "INSERT INTO" + " " + Const.USER_TABLE + "(" +
                 Const.USER_FIRSTNAME + "," +Const.USER_LASTNAME + "," +
-                Const.USER_PASSWORD + "," + Const.USER_USERNAME + "," +
+                Const.USER_USERNAME + "," + Const.USER_PASSWORD + "," +
                 Const.USER_LOCATION + "," + Const.USER_GENDER + ")" +
                 "VALUES(?,?,?,?,?,?)";
 
@@ -51,7 +52,9 @@ public class DatabaseHandler extends Config {
         }
     }
 
-    public ResultSet getUser(User user){
+
+    //Метод пытающийся получить всю строку из Б.Д. по введенным Login и Password
+    public ResultSet getUserLogPass(User user){
         ResultSet resSet = null;
 
         String select = "SELECT * FROM" + " " + Const.USER_TABLE + " " + "WHERE" + " " +
@@ -72,4 +75,28 @@ public class DatabaseHandler extends Config {
 
         return resSet;
     }
+
+
+    //Метод пытающийся получить всю строку из Б.Д. по введенному Login
+    public ResultSet getUserLog(User user){
+        ResultSet resSet = null;
+
+        String select = "SELECT * FROM" + " " + Const.USER_TABLE + " " + "WHERE" + " " +
+                Const.USER_USERNAME + "=?";
+        try {
+            PreparedStatement prSt = getDbConnection().prepareStatement(select);
+            prSt.setString(1, user.getUserName());
+
+            resSet = prSt.executeQuery();
+        } catch (ClassNotFoundException e) {
+            log.error("ClassNotFoundException", e);
+            e.printStackTrace();
+        } catch (SQLException e) {
+            log.error("SQLException in DatabaseHandler", e);
+            e.printStackTrace();
+        }
+
+        return resSet;
+    }
+
 }
