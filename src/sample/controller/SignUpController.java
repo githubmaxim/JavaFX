@@ -78,11 +78,11 @@ public class SignUpController {
 
         signUpButton.setOnAction(event -> {
             signUpNewUser();
-         });
+        });
     }
-//В этом методе мы будем наполнять данными SQL запрос на добавление полей в Б.Д. из метода signUpUser класса
-// DatabaseHandler. Используется при этом класс-прокладка User, который (в случае необходимости) будет закрыт от
-// изменения извне.
+//В этом методе мы будем наполнять данными SQL запрос на добавление полей в Б.Д. из метода signUpUser
+// класса DatabaseHandler. Используется при этом класс-прокладка User, который (в случае необходимости)
+// будет закрыт от изменения извне.
 // Короче тут идет связка трех классов и трех методов для одного элементарного действия:
 // получения данных из формы и наполнения ими SQL запроса на вставку в Б.Д.
     private void signUpNewUser() {
@@ -100,22 +100,24 @@ public class SignUpController {
             gender = "Woman";
 
         //проверяем на заполненность полей формы
-        if ("".equals(firstName) || "".equals(lastName) || "".equals(userName) || "".equals(password) || "".equals(locat) || "".equals(gender)){
+        if ("".equals(firstName) || "".equals(lastName) || "".equals(userName) ||
+                "".equals(password) || "".equals(locat) || "".equals(gender)){
             error_reg_field.setVisible(true);
         }
         else{
 
             error_reg_field.setVisible(false);
 
-            //заполняем полученными данными с полей формы поля класса User(в котором только конструктор и геттеры\сеттеры)
+            //заполняем полученными данными с полей формы поля класса User
+            // (в котором только конструктор и геттеры\сеттеры)
             loginUser(userName);
 
         }
     }
 
 
-    //метод проверяет на наличие в Б.Д. введенног Login и потом или переходит на новую страницу
-    //или трясет поле ввода Login и делает видимым поле ошибки
+    //метод проверяет на наличие в Б.Д. введенного Login и потом или переходит на стартовую
+    // страницу или трясет поле ввода Login и делает видимым поле ошибки
     private void loginUser(String loginText) {
         DatabaseHandler dbHandler = new DatabaseHandler();
 
@@ -136,6 +138,8 @@ public class SignUpController {
             e.printStackTrace();
         }
 
+        //если такого введенного Логина в Б.Д. нет, то переходим на начальную страницу +
+        // заполняем Б.Д. новыми данными
         if (counter == 0){
 
             openNewScene("/sample/view/sample.fxml");
@@ -146,6 +150,7 @@ public class SignUpController {
         else {
             error_login_field.setVisible(true); //устанавливаем поле ошибки ввода логина видимым
 
+            //трусим поле Login
             Shake userLoginAnim = new Shake(login_field);
             userLoginAnim.playAnim();
         }
@@ -160,7 +165,7 @@ public class SignUpController {
         //закрываем текущее fxml окно
         Stage stage = (Stage) signUpButton.getScene().getWindow();
         stage.close();
-
+/*
         //Дальше идет блок который запустит другое fxml окно вместо закрытого
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(window));
@@ -175,6 +180,8 @@ public class SignUpController {
         Stage stage1 = new Stage();
         stage1.setScene(new Scene(root));
         stage1.show();
+
+ */
 
     }
 }
