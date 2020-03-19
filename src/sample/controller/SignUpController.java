@@ -1,5 +1,11 @@
 package sample.controller;
 
+// тут будет описано 2 варианта развития событий:
+// 1. все fxml страницы при открытии создаются новым класслоадером, а при закрытии закрываются .close()
+// 2. в этом случае страница sample.fxml не закрывается, а скрывается. А потом при раскрытии снова на
+// ней остаются все набранные ранее данные
+// !!! Изменить нужно оба файла Controller.fxml и SignUpController.fxml !!!
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -136,6 +142,8 @@ public class SignUpController {
             e.printStackTrace();
         }
 
+        //если такого введенного Логина в Б.Д. нет, то переходим на начальную страницу +
+        // заполняем Б.Д. новыми данными
         if (counter == 0){
 
             openNewScene("/sample/view/sample.fxml");
@@ -146,6 +154,7 @@ public class SignUpController {
         else {
             error_login_field.setVisible(true); //устанавливаем поле ошибки ввода логина видимым
 
+            //трусим поле Login
             Shake userLoginAnim = new Shake(login_field);
             userLoginAnim.playAnim();
         }
@@ -161,7 +170,10 @@ public class SignUpController {
         Stage stage = (Stage) signUpButton.getScene().getWindow();
         stage.close();
 
-        //Дальше идет блок который запустит другое fxml окно вместо закрытого
+
+        // !!! Дальше идет блок только для ситуации №1, для ситуации №2 его удалить или скрыть !!!
+
+        // блок создает новым класслоадером новое sample.fxml окно вместо закрытого
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(window));
 
