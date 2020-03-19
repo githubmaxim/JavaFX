@@ -1,4 +1,5 @@
 package sample.controller;
+
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,7 +23,6 @@ import sample.user.User;
 
 public class Controller {
     private static final Logger log = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
-
 
     @FXML
     private ResourceBundle resources;
@@ -63,8 +64,16 @@ public class Controller {
                 });
 
         loginSignUpButton.setOnAction(event -> {
-            //переходим на страницу регистрации
+
+            //скрываем текущее fxml окно
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).hide();
+
+            //открываем новое fxml окно
             openNewScene("/sample/view/signUp.fxml");
+
+            //открываем скрытое fxml окно
+            ((Stage)((Node)event.getSource()).getScene().getWindow()).show();
+
         });
     }
 
@@ -73,8 +82,12 @@ public class Controller {
     private void loginUser(String loginText, String loginPassword) {
         DatabaseHandler dbHandler = new DatabaseHandler();
         User user = new User();
+
+        //заполняем поля для запроса
         user.setUserName(loginText);
         user.setPassword(loginPassword);
+
+        //делаем запрос (из класса DatabaseHandler) в Б.Д.
         ResultSet result = dbHandler.getUserLogPass(user);
 
         int counter = 0;
@@ -88,9 +101,12 @@ public class Controller {
                 e.printStackTrace();
         }
 
+        //если такие данные в Б.Д. есть переходим на страницу сайта
         if (counter >= 1){
+
             openNewScene("/sample/view/app.fxml");
         }
+        //если нет показываем поле ошибки и трясем поля
         else {
             error_field.setVisible(true); //устанавливаем поле ошибки ввода логина/пароля видимым
 
@@ -101,22 +117,19 @@ public class Controller {
         }
     }
 
-    //метод будет скрывать текущее окно и открывать введенное новое или
-    // закрывать текущее окно и открывать введенное новое
+    //Метод будет только открывать введенное новое или закрывать текущее окно и открывать введенное новое.
+    //Это будет зависеть от того какая кнопка была нажата на окне формы
     public void openNewScene(String window) {
 
 
-        //строка которая при нажатии на эту кнопку будет прятаться окно "***.fxml",
-        //но как открыть и использовать это окно снова я пока не нашел
-        //loginSignUpButton.getScene().getWindow().hide();
-
-        //!!!Дальше реализован механизм закрытия текущего и открытия (новым classLoader-ом) нового fxml окна!!!
-
-        //блок кода который закрывает текущее fxml окно
+        // Механизм не понял, но если этот блок убрать, то при переходе уже на страницу
+        // сайта оставит открытым окно входа
         Stage stage = (Stage) loginSignUpButton.getScene().getWindow();
         stage.close();
+        //или можно написать - ((Stage) loginSignUpButton.getScene().getWindow()).close();
 
-        //блок кода который запустит другое fxml окно вместо зарытого
+
+        //блок кода который запустит другое fxml окно вместо закрытого
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(window));
 
@@ -129,7 +142,7 @@ public class Controller {
         Parent root = loader.getRoot(); //корневой компонент в который будут вложены остальные элементы
         Stage stage1 = new Stage();
         stage1.setScene(new Scene(root));
-        stage1.show();
+        stage1.showAndWait();
 
 
 
